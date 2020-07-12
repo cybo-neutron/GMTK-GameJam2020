@@ -12,12 +12,12 @@ public class GizmoEffect : MonoBehaviour
     {
         
     }
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        //Gizmos.DrawSphere(transform.position, radius);
+        Gizmos.DrawSphere(transform.position, radius);
         //Gizmos.DrawCube(transform.position, siz);
-        width = transform.parent.transform.localScale.x;
-        Gizmos.DrawCube(transform.position, new Vector3(width/2, 0.01f, 1f));
+        //width = transform.parent.transform.localScale.x;
+        //Gizmos.DrawCube(transform.position, new Vector3(width/2, 0.01f, 1f));
     }
 }

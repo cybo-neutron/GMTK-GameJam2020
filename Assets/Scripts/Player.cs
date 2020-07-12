@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
+    
+
+
     Rigidbody2D rb;
     [SerializeField] float playermoveSpeed;
     [SerializeField] float jumpSpeed;
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask lmask;
     float pWidth;
+
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] Transform bulletEmmisionPoint;
 
     PlayerAbilities ability;
     int extraJumps;
@@ -21,20 +27,13 @@ public class Player : MonoBehaviour
 
         pWidth = transform.localScale.x;
         extraJumps = ability.extraJumps;
-       
 
+        ability.nextShot = Time.time;
     }
 
     
     void Update()
     {
-       
-
-     
-
-       
-        
-
 
         
     }
@@ -48,6 +47,17 @@ public class Player : MonoBehaviour
         if (moveX != 0)
             flip(moveX);
 
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            //shoot
+            if(Time.time>ability.nextShot)
+            {
+                ability.nextShot = Time.time + ability.fireRate;
+                Shoot();
+
+            }
+        }
     }
 
     void HandleJump()
@@ -87,5 +97,15 @@ public class Player : MonoBehaviour
 
     }
 
+
+   
+
+    void Shoot()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, bulletEmmisionPoint.position, bulletEmmisionPoint.rotation);
+        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
+        bulletRb.AddForce(bullet.transform.right * ability.shootSpeed, ForceMode2D.Force);
+
+    }
 
 }
