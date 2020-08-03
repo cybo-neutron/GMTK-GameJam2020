@@ -14,18 +14,16 @@ public class Character : MonoBehaviour,IDamage
 
     public void TakeDamage(float damageAmount)
     {
-        Debug.Log("Took Damage");
+        
         Health -= damageAmount;
 
         if(Health<=0)
         {
             //play death effect
-
+            GameManager.Instance.playerDead();
             Destroy(this.gameObject);
         }
-
-
-        Debug.Log(Health);
+    
     }
 
 }

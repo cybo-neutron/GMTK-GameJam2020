@@ -19,7 +19,7 @@ public enum States{
     public float points;
 
 }
-public class Enemy : Character
+public class Enemy : enemyCharacter
 {
     States enemyState;
 
@@ -204,6 +204,21 @@ public class Enemy : Character
         GameObject bullet = Instantiate(bulletPrefab, bulletEmissionPoint.position, bulletEmissionPoint.rotation);
         Rigidbody2D bulletrb = bullet.GetComponent<Rigidbody2D>();
         bulletrb.AddForce(bullet.transform.right*bulletSpeed, ForceMode2D.Force);
+
+    }
+
+    public override void TakeDamage(float damageAmount)
+    {
+        base.TakeDamage(damageAmount);
+
+        if(Health<=0)
+        {
+            //play particle effect;
+
+            GameManager.Instance.updateScore((int)eb.points);
+
+            Destroy(this.gameObject);
+        }
 
     }
 

@@ -27,8 +27,9 @@ public class GameManager : MonoBehaviour
     #endregion
 
     static int score;
-    static int playerLives;
-    static bool gameOver;
+    int playerLives;
+    bool gameOver;
+    public bool isGamePaused;
 
     public static int Score
     {
@@ -39,18 +40,42 @@ public class GameManager : MonoBehaviour
     {
         score = 0;
         gameOver = false;
+        isGamePaused = false;
+        
     }
 
-
-    public static void playerDead()
+    private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape) && !gameOver)
+        {
+            if(isGamePaused)
+            {
+                isGamePaused = false;
+                UI_Manager.Instance.ResumeGame();
+            }
+            else
+            {
+                isGamePaused = true;
+                UI_Manager.Instance.PauseGame();
+            }
+
+        }
+    }
+
+
+    public void playerDead()
+    {
+        gameOver = true;
+        UI_Manager.Instance.showGameOverPanel();
 
     }
 
 
-    public static void updateScore(int Score)
+    
+    public  void updateScore(int Score)
     {
         score += Score;
+        UI_Manager.Instance.updateScore(score);
 
     }
 
